@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Front\QuoteController;
+use App\Http\Controllers\Auth\Front\FavController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::put('/quote/edit', [QuoteController::class, 'edit'])->name('quote.edit');
     Route::delete('/quote/{id}', [QuoteController::class, 'destroy'])->name('quote.destroy');
     Route::put('/quote/{id}', [QuoteController::class, 'update'])->name('quote.update');
+
+    Route::post('/quote/{quoteId}', [FavController::class, 'toggleLike'])->name('quotes.toggle-like');
+    Route::get('/quote/{quoteId}', [FavController::class, 'index'])->name('quotes.count');
 });
 
 require __DIR__ . '/auth.php';

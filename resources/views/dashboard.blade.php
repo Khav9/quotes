@@ -23,11 +23,11 @@
 
         <!-- Custom Buttons to control testimonials -->
         <div class="control-btns">
-            <button id="prevTestimonial" class="btn btn-secondary">Back</button>
+            <button id="prevTestimonial" class="btn btn-secondary">{{ __('back')}}</button>
             <button id="addTestimonialBtn" class="btn btn-success">
                 <i class="bi bi-plus-circle icon-btn" title="Add"></i>
             </button>
-            <button id="nextTestimonial" class="btn btn-primary">Next</button>
+            <button id="nextTestimonial" class="btn btn-primary">{{ __('next')}}</button>
         </div>
     </div>
 
@@ -97,6 +97,8 @@
         // Convert PHP data to JS
         const quotes = @json($quotes);
         const currentUserId = @json(auth()->id());
+        console.log(quotes);
+        
 
         // Function to load testimonials dynamically
         function loadTestimonials() {
@@ -117,7 +119,8 @@
 
             <!-- Actions for like, edit, delete (visible only to owner) -->
             <div class="testimonial-actions">
-                <i class="bi bi-hand-thumbs-up icon-btn" title="Like"></i>
+                <span class="like-count" data-id="${testimonial.id}">${testimonial.favs}</span>
+                <i class="bi bi-hand-thumbs-up icon-btn" id="like-btn" title="Like" data-id="${testimonial.id}"></i>
                 ${isOwner ? `
                 <i class="bi bi-pencil icon-btn edit-btn" title="Edit" data-bs-toggle="modal" data-bs-target="#editQuoteModal"
                     data-text="${testimonial.text}" data-credit_to="${testimonial.credit_to}" data-id="${testimonial.id}"></i>
@@ -178,6 +181,26 @@
                     document.body.appendChild(form);
                     form.submit();  // Submit the form to delete the testimonial
                 }
+            }
+        });
+
+        // Handle like button click
+        document.addEventListener('click', function (event) {
+            if (event.target.matches('.bi-hand-thumbs-up') || event.target.closest('.bi-hand-thumbs-up')) {
+            const likeButton = event.target.closest('.bi-hand-thumbs-up');
+            const id = likeButton.getAttribute('data-id');
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/quote/${id}`;
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            form.appendChild(csrfInput);
+            document.body.appendChild(form);
+            form.submit(); // Submit the form to like the testimonial
             }
         });
 
