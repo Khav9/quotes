@@ -1,0 +1,161 @@
+/* public/css/styles.css */
+.testimonial {
+    text-align: center;
+    margin-top: 50px;
+}
+.testimonial .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+.testimonial .quote {
+    font-size: 1.2rem;
+    font-style: italic;
+}
+.testimonial .author {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.testimonial .role {
+    font-size: 0.9rem;
+    color: grey;
+}
+.control-btns {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.control-btns {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn {
+    padding: 6px 12px; /* Reduced padding for smaller size */
+    font-size: 0.9rem; /* Smaller font size */
+    font-weight: bold;
+    border-radius: 20px; /* Rounded corners with smaller radius */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Slightly smaller shadow */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Hover Effects */
+.btn:hover {
+    transform: scale(1.05); /* Slightly increase size on hover */
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15); /* Smaller hover shadow */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+}
+ /* Modal Content Styles */
+ .modal-content {
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Input field styles */
+.form-control {
+    border-radius: 10px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Animation for input fields */
+.animated-input {
+    position: relative;
+    overflow: hidden;
+}
+
+.animated-input::placeholder {
+    color: #ccc;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+.animated-input:focus::placeholder {
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+/* Cool button styles */
+.cool-button {
+    background-color: #007bff;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.cool-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+}
+
+/* Optional: Modal fade animation */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease;
+}
+
+.modal.fade.show .modal-dialog {
+    transform: translate(0, 0);
+}
+
+.modal.fade.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Additional Styles */
+.mb-4 {
+    margin-bottom: 1.5rem; /* Increased spacing for better separation */
+}
+
+.modal-header {
+    background-color: #007bff; /* Modal header background */
+    color: white; /* Text color */
+}
+.testimonial-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.testimonial-actions .icon-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.testimonial-actions .icon-btn:hover {
+    color: #007bff;
+}
