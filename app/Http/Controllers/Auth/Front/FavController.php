@@ -29,7 +29,7 @@ class FavController extends Controller
             }
             
             $existingFav->delete();
-            return redirect()->back()->with('success', 'Quote unliked successfully!');
+            return redirect()->back()->with('success', __('quote_unliked_successfully'));
 
         } else {
             Fav::create([
@@ -38,7 +38,7 @@ class FavController extends Controller
             ]);
             Quote::where('id', $quoteId)->increment('favs');
 
-            return redirect()->back()->with('success', 'Quote liked successfully!');
+            return redirect()->back()->with('success', __('quote_like_successfully'));
         }
     }
 }

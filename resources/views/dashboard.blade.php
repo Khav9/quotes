@@ -6,14 +6,17 @@
 
     <div class="container testimonial">
         @if (session('error'))
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @elseif (session('success'))
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
 
         <div id="testimonialSlider" class="carousel slide" data-bs-interval="false">
             <div class="carousel-inner" id="testimonials-container">
@@ -37,24 +40,24 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addTestimonialLabel">Add New Quote</h5>
+                    <h5 class="modal-title" id="addTestimonialLabel">{{ __('add_new_quote')}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="{{ route('quote.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <label for="text" class="form-label">Quote</label>
+                            <label for="text" class="form-label">{{ __('quote')}}</label>
                             <textarea class="form-control animated-input" id="text" name="text" rows="4" required
                                 placeholder="Enter the quote here...">{{ old('text') }}</textarea>
                         </div>
                         <div class="mb-4">
-                            <label for="credit_to" class="form-label">Credit To</label>
+                            <label for="credit_to" class="form-label">{{__('credit_to')}}</label>
                             <input type="text" class="form-control animated-input" id="credit_to" name="credit_to"
                                 placeholder="Enter your name..." value="{{ old('credit_to') }}">
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary cool-button">Add Testimonial</button>
+                            <button type="submit" class="btn btn-primary cool-button">{{__('add')}}</button>
                         </div>
                     </form>
                 </div>
@@ -67,7 +70,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editQuoteLabel">Edit Quote</h5>
+                    <h5 class="modal-title" id="editQuoteLabel">{{__('edit_quote')}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -75,17 +78,17 @@
                         @csrf
                         @method('PUT') <!-- Use PUT for updating -->
                         <div class="mb-4">
-                            <label for="edit-text" class="form-label">Quote</label>
+                            <label for="edit-text" class="form-label">{{__('quote')}}</label>
                             <textarea class="form-control animated-input" id="edit-text" name="text" rows="4"
                                 required>{{ old('text') }}</textarea>
                         </div>
                         <div class="mb-4">
-                            <label for="edit-credit_to" class="form-label">Credit To</label>
+                            <label for="edit-credit_to" class="form-label">{{ __('credit_to')}}</label>
                             <input type="text" class="form-control animated-input" id="edit-credit_to" name="credit_to"
                                 value="{{ old('credit_to') }}">
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary cool-button">Update Testimonial</button>
+                            <button type="submit" class="btn btn-primary cool-button">{{ __('update')}}</button>
                         </div>
                     </form>
                 </div>
@@ -98,7 +101,7 @@
         const quotes = @json($quotes);
         const currentUserId = @json(auth()->id());
         console.log(quotes);
-        
+
 
         // Function to load testimonials dynamically
         function loadTestimonials() {
@@ -165,7 +168,7 @@
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = `/quote/${id}`;
-                    
+
                     const methodInput = document.createElement('input');
                     methodInput.type = 'hidden';
                     methodInput.name = '_method';
@@ -187,20 +190,20 @@
         // Handle like button click
         document.addEventListener('click', function (event) {
             if (event.target.matches('.bi-hand-thumbs-up') || event.target.closest('.bi-hand-thumbs-up')) {
-            const likeButton = event.target.closest('.bi-hand-thumbs-up');
-            const id = likeButton.getAttribute('data-id');
+                const likeButton = event.target.closest('.bi-hand-thumbs-up');
+                const id = likeButton.getAttribute('data-id');
 
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = `/quote/${id}`;
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/quote/${id}`;
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            form.appendChild(csrfInput);
-            document.body.appendChild(form);
-            form.submit(); // Submit the form to like the testimonial
+                form.appendChild(csrfInput);
+                document.body.appendChild(form);
+                form.submit(); // Submit the form to like the testimonial
             }
         });
 
@@ -224,5 +227,32 @@
             var addTestimonialModal = new bootstrap.Modal(document.getElementById('addTestimonialModal'));
             addTestimonialModal.show();
         });
+
+
+        document.getElementById('languageSelect').addEventListener('change', function () {
+            updateLanguage(this.value);
+        });
+
+
+        // Function to update the language
+        function updateLanguage(language) {
+            fetch('/update-language', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ language: language })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Reload the page to apply the new language
+                    } else {
+                        alert('Failed to update language');
+                    }
+                });
+        }
+     
     </script>
 </x-app-layout>

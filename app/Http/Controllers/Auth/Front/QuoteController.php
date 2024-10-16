@@ -35,7 +35,7 @@ class QuoteController extends Controller
         $lastQuote = Quote::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
 
         if ($lastQuote && $lastQuote->created_at->gt(now()->subDay())) {
-            return redirect()->route('dashboard')->with('error', 'You can only create a new quote once every 24 hours.');
+            return redirect()->route('dashboard')->with('error', __('you_can_only_create_new_quote_once_every_24_hours'));
         }
 
         Quote::create([
@@ -44,7 +44,7 @@ class QuoteController extends Controller
             'user_id' => $user->id,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Quote created successfully!');
+        return redirect()->route('dashboard')->with('success', __('create_quote_successfully'));
     }
 
     public function update(Request $request, $id)
@@ -53,7 +53,7 @@ class QuoteController extends Controller
         $quote->text = $request->input('text');
         $quote->credit_to = $request->input('credit_to');
         $quote->save();
-        return redirect()->back()->with('success','Quote updated successfully!');
+        return redirect()->back()->with('success', __('quote_update_successfully'));
     }
     
     public function destroy($id)
@@ -65,7 +65,7 @@ class QuoteController extends Controller
         }
     
         $quote->delete();
-        return redirect()->back()->with('success', 'Testimonial deleted successfully.');
+        return redirect()->back()->with('success', __('qoute_deleted_successfully'));
     }
     
 }
