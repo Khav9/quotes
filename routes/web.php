@@ -36,7 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/quote/{id}', [QuoteController::class, 'update'])->name('quote.update');
 
     Route::post('/quote/{quoteId}', [FavController::class, 'toggleLike'])->name('quotes.toggle-like');
-    Route::get('/quote/{quoteId}', [FavController::class, 'index'])->name('quotes.count');
     
     Route::post('/update-language', [App\Http\Controllers\LanguageController::class, 'updateLanguage'])->name('changeLanguage');
 });
