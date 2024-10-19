@@ -43,5 +43,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/quote/{quoteId}', [LikeController::class, 'toggleLike'])->name('quotes.toggle-like');
     
-    Route::post('/update-language', [App\Http\Controllers\API\LangController::class, 'updateLanguage'])->name('changeLanguage');
 });

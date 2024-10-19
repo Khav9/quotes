@@ -35,5 +35,6 @@
     "please_confirm_your_password_before_continuing": "This is a secure area of the application. Please confirm your password before continuing.",
     "save":"រក្សាទុក",
     "saved":"បានរក្សាទុក",
-    "langauge": "ភាសា"
+    "langauge": "ភាសា",
+    "account_created": "គណនីបានបង្កើតដោយជោគជ័យ !"
 }

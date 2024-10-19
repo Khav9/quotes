@@ -52,9 +52,28 @@ class AuthController extends Controller
         //TOdo it likes get user's info
     }
 
-    // public function register(Request $request): JsonResponse
-    // {
-    //     //TOdo for register new account
+    public function store(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|string|email|max:255|unique:users',
+            'password'  => 'required|string|min:8',
+            'confirm_password' => 'required|same:password'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $user = User::create(array_merge(
+            $validator->validated(),
+            ['password' => bcrypt($request->password)]
+        ));
+
+        return response()->json([
+            'message' => __('account_created'),
+            'status'    => 'success',
+        ]);
       
-    // }
+    }
 }
