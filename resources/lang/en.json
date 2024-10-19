@@ -36,5 +36,7 @@
     "save": "Save",
     "saved": "Saved",
     "langauge": "Langauge",
-    "account_created": "Account has been created Successfully !"
+    "account_created": "Account has been created Successfully !",
+    "user_image": "User Image",
+    "update_profile_success": "Profile Updated Successfully !"
 }

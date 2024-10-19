@@ -100,9 +100,12 @@
         // Convert PHP data to JS
         const quotes = @json($quotes);
         const currentUserId = @json(auth()->id());
+        const baseUrl = "{{ Storage::url('emojis/') }}";
+        const defaultAvatar = "{{ Storage::url('default/75782cfaee57a0e06fee3852182df857.jpg') }}"; // Default image path
+
         console.log(quotes);
-
-
+        
+        
         // Function to load testimonials dynamically
         function loadTestimonials() {
             const container = document.getElementById('testimonials-container');
@@ -111,10 +114,13 @@
             quotes.forEach((testimonial, index) => {
                 const activeClass = index === 0 ? 'active' : '';
                 const isOwner = testimonial.user_id === currentUserId;
+                // Check if the avatar exists and has a profile property                
+                const avatar = testimonial.avatar ? `${baseUrl}${testimonial.avatar.profile}` : defaultAvatar;
+
                 const testimonialHTML = `
         <div class="carousel-item ${activeClass}">
             <div class="d-flex justify-content-center">
-                <img src="${testimonial.image}" class="avatar" alt="${testimonial.name}">
+                 <img src="${avatar}" class="avatar" alt="cat">
             </div>
             <p class="quote">"${testimonial.text}"</p>
             <p class="author">${testimonial.credit_to ? testimonial.credit_to : 'Unknown'}</p>
@@ -228,12 +234,6 @@
             addTestimonialModal.show();
         });
 
-
-        document.getElementById('languageSelect').addEventListener('change', function () {
-            updateLanguage(this.value);
-        });
-
-
         // Function to update the language
         function updateLanguage(language) {
             fetch('/update-language', {
@@ -253,6 +253,6 @@
                     }
                 });
         }
-     
+
     </script>
 </x-app-layout>

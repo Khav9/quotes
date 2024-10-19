@@ -4,12 +4,18 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Hash;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
+    /**
+     * The password to be used for the test user.
+     *
+     * @var string|null
+     */
+    protected static ?string $password;
     /**
      * Define the model's default state.
      *
@@ -19,9 +25,9 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => config('auth.test_user_email'), 
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => static::$password ??= Hash::make(config('auth.test_user_password')),
             'remember_token' => Str::random(10),
         ];
     }

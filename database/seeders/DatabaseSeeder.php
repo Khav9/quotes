@@ -14,9 +14,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            EmojiTableSeeder::class,
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test User',
+            'emoji_id' => 1,
+        ]);
     }
 }

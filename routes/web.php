@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Front\QuoteController;
 use App\Http\Controllers\Auth\Front\FavController;
+use App\Http\Controllers\Auth\Front\EmojiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::get('/dashboard', [QuoteController::class, 'index'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::post('/profile', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -38,6 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/quote/{quoteId}', [FavController::class, 'toggleLike'])->name('quotes.toggle-like');
     
     Route::post('/update-language', [App\Http\Controllers\LanguageController::class, 'updateLanguage'])->name('changeLanguage');
+
+    Route::post('/update-profile-status', [ProfileController::class, 'updateProfileStatus'])->name('update.profile.status');
+    Route::get('/get-emojis', [EmojiController::class, 'index'])->name('get.emojis');
+    Route::post('/user/update-emoji', [EmojiController::class, 'updateEmoji'])->name('user.update.emoji');
+
 });
 
 require __DIR__ . '/auth.php';

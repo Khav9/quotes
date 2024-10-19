@@ -111,5 +111,7 @@ return [
     */
 
     'password_timeout' => 10800,
+    'test_user_password' => env('TEST_USER_PASSWORD', 'password'),
+    'test_user_email' => env('TEST_USER_EMAIL', 'test@example.com'),
 
 ];
